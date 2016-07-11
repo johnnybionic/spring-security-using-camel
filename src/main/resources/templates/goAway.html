@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
+layout:decorator="layouts/main">
+<head>
+       <title>Unauthorised</title>
+</head>
+<body>
+<div layout:fragment="content">
+	<div class="alert alert-danger" role="alert">
+	  	<span class="sr-only">Error:</span>
+		<h1>
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		 Access denied
+		 </h1>
+	</div>
+	
+	<div class="alert alert-warning" role="alert">
+	You're not allowed here. Go away!
+	</div>
+	
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="layouts/main">
+<head>
+	<title>Hello Spring Security</title>
+</head>
+<body th:with="home=${true}">
+<!-- 	<div th:fragment="logout" class="logout"
+		sec:authorize="isAuthenticated()">
+		Logged in user: <span sec:authentication="name"></span> | Roles: <span
+			sec:authentication="principal.authorities"></span>
+		<div>
+			<form action="#" th:action="@{/logout}" method="post">
+				<input type="submit" value="Logout" />
+			</form>
+		</div>
+	</div>
+ -->	
+ 	<div layout:fragment="content">
+	 	<h1>Welcome to the Spring/Camel Security Demo</h1>
+	 	<div class="alert alert-info" role="alert">
+	 	This application invokes a Camel route that contains the steps required to authenticate a user
+	 	</div>
+	 	<br/>
+		<p>This is an unsecured welcome page. Select another area of the app to explore</p>
+		
+		<div class="list-group">
+		  <a href="/login" th:href="@{/login}" class="list-group-item">
+		    <h4 class="list-group-item-heading">Login</h4>
+		  </a>
+		  <a href="/user/index" th:href="@{/user/index}" class="list-group-item">
+		    <h4 class="list-group-item-heading">View standard user pages</h4>
+			<p class="list-group-item-text">Pages accessible by standard users, with login if required</p>		    
+		  </a>
+ 		  <a href="/admin/index" th:href="@{/admin/index}" class="list-group-item">
+		    <h4 class="list-group-item-heading">View administration pages</h4>
+			<p class="list-group-item-text">Pages accessible by administrators, with login if required</p>		    
+		  </a>
+		  <a href="/admin/index" th:href="@{/public/index}" class="list-group-item">
+		    <h4 class="list-group-item-heading">View public pages</h4>
+			<p class="list-group-item-text">Anyone can view these pages</p>		    
+		  </a>
+		</div>
+ 
+	 	<div class="alert alert-info" role="alert">
+	 	It's simple to build a user with discrete steps in the route, combining different components in sequence. Plus it's easy to use different
+	 	authentication routes, either by configuration or dynamically
+		</div>
+	</div>
+</body>
+</html>

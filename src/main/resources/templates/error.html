@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymleaf.org"
+	layout:decorator="layouts/main">
+<head>
+	<title>Default error page</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="alert alert-danger" role="alert">
+			<h1>Ooops!</h1>
+		</div>
+		<div class="alert alert-warning" role="alert">
+			<h3 >Unfortunately, what you just did there, caused a problem</h3>
+		</div>
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<td>Message</td>
+					<td th:text="${message}"></td>
+				</tr>
+				<tr>
+					<td>Error</td>
+					<td th:text="${error}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>			
+</body>
+</html>

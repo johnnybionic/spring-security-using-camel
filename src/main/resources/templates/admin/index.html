@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/main">
+    <head>
+        <title>Hello Spring Security</title>
+    </head>
+    <body>
+ 		<div layout:fragment="content">
+	        <h1>This is the administration page</h1>
+	        <p><a href="/index" th:href="@{/index}">Back to home page</a></p>
+	    </div>
+    </body>
+</html>
