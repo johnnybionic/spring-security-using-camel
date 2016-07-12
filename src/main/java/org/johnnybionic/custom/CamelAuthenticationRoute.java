@@ -11,6 +11,13 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+/**
+ * A simple Camel route that authenticates the user, adds roles, and finally
+ * builds a User.
+ * 
+ * @author johnny
+ *
+ */
 @Component
 public class CamelAuthenticationRoute extends RouteBuilder {
 
@@ -41,10 +48,11 @@ public class CamelAuthenticationRoute extends RouteBuilder {
 		
 		from(authenticationRoute)
 			.log(LoggingLevel.INFO, "Authenticating ... ")
-			// add the user's roles to the exchage
-			.bean(roleProcessor)
+			
 			// authenticate the user
 			.bean(authProcessor)
+			// add the user's roles to the exchange
+			.bean(roleProcessor)
 			// build the user from the output of the previous stages
 			.bean(buildUser);
 	}
