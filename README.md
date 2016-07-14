@@ -11,3 +11,6 @@ Exchange in the previous two steps is used to contruct a User.
 There could be any number of processes (steps) in the route, each responsible for one distinct task. 
 
 The sample also uses Bootstrap to improve on the original example's client :)
+
+There's also some basic use of Spring profiles that shows how authentication providers can
+be determined at runtime. 
