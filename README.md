@@ -6,7 +6,7 @@ This project is based on the sample project 'spring-security-samples-boot-insecu
 It replaces the in-memory authentication used for the solution to that project, and uses instead a Camel route. 
 The idea is that information about the User is obtained during various stages of the route. For example, the User is
 first authenticated as step one. In step two, the User's roles are determined. In step three, the information added to the
-Exchange in the previous two steps is used to contruct a User.
+Exchange in the previous two steps is used to construct a User.
 
 There could be any number of processes (steps) in the route, each responsible for one distinct task. 
 
