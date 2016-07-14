@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.apache.camel.ProducerTemplate;
+import org.johnnybionic.custom.camel.CamelAuthenticationProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package org.johnnybionic.custom;
+package org.johnnybionic.custom.camel;
 
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
@@ -7,6 +7,7 @@ import org.apache.tomcat.util.net.jsse.openssl.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,4 @@
-package org.johnnybionic.custom;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
+package org.johnnybionic.custom.camel;
 
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.ProducerTemplate;

@@ -10,7 +10,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.DefaultExchange;
 import org.johnnybionic.CamelSecurityApplication;
-import org.johnnybionic.custom.SimpleBuildUserProcessor;
+import org.johnnybionic.custom.simple.SimpleBuildUserProcessor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

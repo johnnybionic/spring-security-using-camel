@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Collection;
 
 import org.johnnybionic.CamelSecurityApplication;
-import org.johnnybionic.custom.SimpleAuthenticationProvider;
+import org.johnnybionic.custom.simple.SimpleAuthenticationProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

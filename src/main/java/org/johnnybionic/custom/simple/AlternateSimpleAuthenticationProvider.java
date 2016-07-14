@@ -1,4 +1,4 @@
-package org.johnnybionic.custom;
+package org.johnnybionic.custom.simple;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -8,6 +8,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+/**
+ * Shows how to use a different AuthenticationProvider by using profiles. 
+ * 
+ * @author johnny
+ *
+ */
 @Profile("secondary")
 @Component("camelRouteAuthenticationProvider")
 public class AlternateSimpleAuthenticationProvider implements AuthenticationProvider {

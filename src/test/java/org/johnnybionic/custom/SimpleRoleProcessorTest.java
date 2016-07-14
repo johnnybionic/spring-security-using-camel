@@ -11,7 +11,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.DefaultExchange;
 import org.johnnybionic.CamelSecurityApplication;
-import org.johnnybionic.custom.SimpleRoleProcessor;
+import org.johnnybionic.custom.simple.SimpleRoleProcessor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,9 @@
-package org.johnnybionic.custom;
+package org.johnnybionic.custom.simple;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,8 @@ public class SimpleAuthenticationProcessor implements Processor {
 	private AuthenticationProvider authenticationProvider;
 
 	@Autowired
-	public SimpleAuthenticationProcessor(SimpleAuthenticationProvider authenticationProvider) {
+	public SimpleAuthenticationProcessor(
+			@Qualifier("camelRouteAuthenticationProvider") AuthenticationProvider authenticationProvider) {
 		this.authenticationProvider = authenticationProvider;
 	}
 	
