@@ -1,4 +1,4 @@
-package org.johnnybionic.custom;
+package org.johnnybionic.custom.camel;
 
 import static org.junit.Assert.*;
 

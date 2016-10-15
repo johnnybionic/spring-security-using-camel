@@ -1,8 +1,6 @@
-package org.johnnybionic.custom;
+package org.johnnybionic.custom.simple;
 
-import static org.junit.Assert.*;
-
-import java.util.Collection;
+import static org.junit.Assert.fail;
 
 import org.johnnybionic.CamelSecurityApplication;
 import org.johnnybionic.custom.simple.SimpleAuthenticationProvider;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
