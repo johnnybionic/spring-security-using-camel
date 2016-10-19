@@ -8,28 +8,36 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+/**
+ * Configuration if Spring Security.
+ *
+ * @author johnny
+ *
+ */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	@Qualifier("camelAuthenticationProvider")
-	private AuthenticationProvider authProvider;
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+    @Autowired
+    @Qualifier("camelAuthenticationProvider")
+    private AuthenticationProvider authProvider;
+
+    @Override
+    //@formatter:off
+	protected void configure(final HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/css/**", "/index").permitAll()		
+				.antMatchers("/css/**", "/index").permitAll()
 				.antMatchers("/user/**").hasRole("USER")
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.and()
 			.formLogin()
-				.loginPage("/login").failureUrl("/login-error");	
+				.loginPage("/login").failureUrl("/login-error");
 	}
+    //@formatter:on
 
-	@Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider);
     }
-	
+
 }

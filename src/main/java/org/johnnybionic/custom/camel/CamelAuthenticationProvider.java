@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * An authentication provider that invokes a Camel route.
- * 
+ *
  * @author johnny
  *
  */
@@ -23,38 +23,39 @@ import lombok.extern.slf4j.Slf4j;
 @Component("camelAuthenticationProvider")
 public class CamelAuthenticationProvider implements AuthenticationProvider {
 
-	private ProducerTemplate producerTemplate;
-	
-	@Setter
+    private ProducerTemplate producerTemplate;
+
+    @Setter
     @Value("${authentication.route:direct:authentication-route}")
     private String authenticationRoute;
-	
-	@Autowired
-	public CamelAuthenticationProvider(ProducerTemplate producerTemplate) {
-		this.producerTemplate = producerTemplate;
-	}
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		
-		try {
-			Authentication response = producerTemplate.requestBody(authenticationRoute, authentication, Authentication.class);
-			
-			return response;
-		}
-		catch (CamelExecutionException camelExecutionException) {
-			if (camelExecutionException.getCause() instanceof AuthenticationException) {
-				throw ((AuthenticationException) camelExecutionException.getCause());
-			}
-			
-			throw camelExecutionException;
-		}
-			
-	}
+    @Autowired
+    public CamelAuthenticationProvider(ProducerTemplate producerTemplate) {
+        this.producerTemplate = producerTemplate;
+    }
 
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return authentication.equals(UsernamePasswordAuthenticationToken.class);
-	}
+    @Override
+    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
+
+        try {
+            Authentication response = producerTemplate.requestBody(authenticationRoute, authentication,
+                    Authentication.class);
+
+            return response;
+        }
+        catch (CamelExecutionException camelExecutionException) {
+            if (camelExecutionException.getCause() instanceof AuthenticationException) {
+                throw ((AuthenticationException) camelExecutionException.getCause());
+            }
+
+            throw camelExecutionException;
+        }
+
+    }
+
+    @Override
+    public boolean supports(final Class<?> authentication) {
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+    }
 
 }

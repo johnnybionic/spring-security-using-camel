@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 
 /**
  * A simple authentication provider that doesn't do anything, except fail for
- * one particular user. It simply shows how the authentication is plugged into the
- * Camel route. 
- * 
+ * one particular user. It simply shows how the authentication is plugged into
+ * the Camel route.
+ *
  * This AuthenticationProvider is selected if no profile is defined.
- *  
+ *
  * @author johnny
  *
  */
@@ -22,22 +22,23 @@ import org.springframework.stereotype.Component;
 @Component("camelRouteAuthenticationProvider")
 public class SimpleAuthenticationProvider implements AuthenticationProvider {
 
-	private static final String BAD_USER = "error";
-	private static final String BAD_PASSWORD = "error";
+    private static final String BAD_USER = "error";
+    private static final String BAD_PASSWORD = "error";
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		
-		if (BAD_USER.equalsIgnoreCase(authentication.getName()) && BAD_PASSWORD.equalsIgnoreCase(authentication.getCredentials().toString())) {
-			throw new BadCredentialsException("Invalid credentials");
-		}
-		
-		return authentication;
-	}
+    @Override
+    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
 
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return authentication.equals(UsernamePasswordAuthenticationToken.class);
-	}
+        if (BAD_USER.equalsIgnoreCase(authentication.getName())
+                || BAD_PASSWORD.equalsIgnoreCase(authentication.getCredentials().toString())) {
+            throw new BadCredentialsException("Invalid credentials");
+        }
+
+        return authentication;
+    }
+
+    @Override
+    public boolean supports(final Class<?> authentication) {
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+    }
 
 }

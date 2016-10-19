@@ -9,8 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 /**
- * Shows how to use a different AuthenticationProvider by using profiles. 
- * 
+ * Shows how to use a different AuthenticationProvider by using profiles.
+ *
  * @author johnny
  *
  */
@@ -18,22 +18,21 @@ import org.springframework.stereotype.Component;
 @Component("camelRouteAuthenticationProvider")
 public class AlternateSimpleAuthenticationProvider implements AuthenticationProvider {
 
+    private static final String SECONDARY_USER = "second";
 
-	private static final String SECONDARY_USER = "second";
+    @Override
+    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		
-		if (!SECONDARY_USER.equals(authentication.getName())) {
-			throw new BadCredentialsException("Invalid credentials");
-		}
-		
-		return authentication;
-	}
+        if (!SECONDARY_USER.equals(authentication.getName())) {
+            throw new BadCredentialsException("Invalid credentials");
+        }
 
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return authentication.equals(UsernamePasswordAuthenticationToken.class);
-	}
+        return authentication;
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+    }
 
 }

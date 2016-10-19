@@ -18,7 +18,6 @@ package org.johnnybionic.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author Joe Grandja
@@ -26,46 +25,63 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MainController {
 
-	@RequestMapping("/")
-	public String root() {
-		return "redirect:/index";
-	}
+    public static final String LOGIN_ERROR_ATTRIBUTE = "loginError";
+    public static final String LOGIN_PAGE = "login";
+    public static final String PUBLIC_INDEX_PAGE = "public/index";
+    public static final String ADMIN_INDEX_PAGE = "admin/index";
+    public static final String USER_INDEX_PAGE = "user/index";
+    public static final String INDEX_PAGE = "index";
 
-	@RequestMapping("/index")
-	public String index() {
-		return "index";
-	}
+    /** root. @return redirect to index */
+    @RequestMapping("/")
+    public String root() {
+        return "redirect:/" + INDEX_PAGE;
+    }
 
-	@RequestMapping("/user/index")
-	public String userIndex() {
-		return "user/index";
-	}
+    /** main. @return index page */
+    @RequestMapping("/index")
+    public String index() {
+        return INDEX_PAGE;
+    }
 
-	@RequestMapping("/admin/index")
-	public String adminIndex() {
-		return "admin/index";
-	}
+    /** user page. @return user index page */
+    @RequestMapping("/user/index")
+    public String userIndex() {
+        return USER_INDEX_PAGE;
+    }
 
-	@RequestMapping("/public/index")
-	public String publicIndex() {
-		return "public/index";
-	}
+    /** admin page. @return admin index page */
+    @RequestMapping("/admin/index")
+    public String adminIndex() {
+        return ADMIN_INDEX_PAGE;
+    }
 
-	@RequestMapping(value = "/login")
-	public String login() {
-		return "login";
-	}
+    /** public page. @return public index page */
+    @RequestMapping("/public/index")
+    public String publicIndex() {
+        return PUBLIC_INDEX_PAGE;
+    }
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String postLogin() {
-		// TODO Enable form login with Spring Security (trigger error for now)
-		return "redirect:/login-error";
-	}
+    /*
+     * Login page. The GET below serves the login page. The POST is handled by
+     * Spring Security's filter chain, and is specified in SecurityConfig.
+     */
+    /** login. @return login page */
+    @RequestMapping(value = "/login")
+    public String login() {
+        return LOGIN_PAGE;
+    }
 
-	@RequestMapping("/login-error")
-	public String loginError(Model model) {
-		model.addAttribute("loginError", true);
-		return "login";
-	}
+    /**
+     * login error.
+     *
+     * @param model the model
+     * @return login error page
+     */
+    @RequestMapping("/login-error")
+    public String loginError(final Model model) {
+        model.addAttribute(LOGIN_ERROR_ATTRIBUTE, true);
+        return LOGIN_PAGE;
+    }
 
 }

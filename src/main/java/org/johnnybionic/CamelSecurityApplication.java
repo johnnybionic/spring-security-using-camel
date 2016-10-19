@@ -23,21 +23,30 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
 /**
- * @author johnny
- * developed from a Spring Security example by
+ * @author johnny developed from a Spring Security example by
  * @author Joe Grandja
  */
 @SpringBootApplication
 public class CamelSecurityApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CamelSecurityApplication.class, args);
-	}
+    /**
+     * Main entry point.
+     *
+     * @param args command-line
+     */
+    public static void main(final String[] args) {
+        SpringApplication.run(CamelSecurityApplication.class, args);
+    }
 
-	@Bean
-	EmbeddedServletContainerCustomizer containerCustomizer () {
-		return container -> {
-			container.addErrorPages(new ErrorPage( HttpStatus.FORBIDDEN, "/403" ));
-		};
-	}
+    /**
+     * Adds custom error handling for 403 errors.
+     *
+     * @return {@link EmbeddedServletContainerCustomizer}
+     */
+    @Bean
+    EmbeddedServletContainerCustomizer containerCustomizer() {
+        return container -> {
+            container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/403"));
+        };
+    }
 }

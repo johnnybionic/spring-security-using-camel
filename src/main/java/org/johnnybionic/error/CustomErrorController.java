@@ -16,48 +16,71 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 /**
  * A custom error handler. Directs 403 errors to a particular page; all others
  * go to a standard page.
- * 
+ *
  * @author johnny
  *
  */
 @Controller
 public class CustomErrorController implements ErrorController {
 
-	private static final String UNAUTHORISED = "/403";
-	private static final String ERROR_PATH = "/error";
+    public static final String ERROR_VIEW_NAME = "error";
+    public static final String UNAUTHORISED_VIEW_NAME = "goAway";
+    static final String UNAUTHORISED = "/403";
+    static final String ERROR_PATH = "/error";
 
-	private final ErrorAttributes errorAttributes;
-	
-	@Autowired
-	public CustomErrorController (ErrorAttributes errorAttributes) {
-		this.errorAttributes = errorAttributes;
-	}
+    private final ErrorAttributes errorAttributes;
 
-	@Override
-	public String getErrorPath() {
-		return ERROR_PATH;
-	}
+    @Autowired
+    public CustomErrorController(final ErrorAttributes errorAttributes) {
+        this.errorAttributes = errorAttributes;
+    }
 
-	@RequestMapping(ERROR_PATH)
-	public String customError(Model model,HttpServletRequest request) {
+    @Override
+    public String getErrorPath() {
+        return ERROR_PATH;
+    }
 
-		Map<String,Object> error = getErrorAttributes(request, true);
-		
-		model.addAttribute("error", error.get("error"));
-		model.addAttribute("message", error.get("message"));
+    /**
+     * Used when there is not specific handling for an error code.
+     *
+     * @param model the model
+     * @param request the request
+     * @return the template to use for the error
+     */
+    @RequestMapping(ERROR_PATH)
+    public String customError(final Model model, final HttpServletRequest request) {
 
-		return "error";
-	}
-	
-	@RequestMapping(UNAUTHORISED)
-	public String pageNotFound(Model model,HttpServletRequest request){
-		model.addAttribute("error", getErrorAttributes(request,true));
-		return "goAway";
-	}
+        Map<String, Object> error = getErrorAttributes(request, true);
 
-	private Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
-		RequestAttributes requestAttributes = new ServletRequestAttributes(request);
-		return this.errorAttributes.getErrorAttributes(requestAttributes, includeStackTrace);
-	}
+        model.addAttribute(ERROR_VIEW_NAME, error.get(ERROR_VIEW_NAME));
+        model.addAttribute("message", error.get("message"));
+
+        return ERROR_VIEW_NAME;
+    }
+
+    /**
+     * Specific error handler for 403 Unauthorised.
+     *
+     * @param model the model
+     * @param request the request
+     * @return the name of the view to use
+     */
+    @RequestMapping(UNAUTHORISED)
+    public String unauthorised(final Model model, final HttpServletRequest request) {
+        model.addAttribute(ERROR_VIEW_NAME, getErrorAttributes(request, true));
+        return UNAUTHORISED_VIEW_NAME;
+    }
+
+    /**
+     * Retrieve the error attributes.
+     *
+     * @param request the current request
+     * @param includeStackTrace include or not the stack trace
+     * @return a Map of the attributes
+     */
+    private Map<String, Object> getErrorAttributes(final HttpServletRequest request, final boolean includeStackTrace) {
+        RequestAttributes requestAttributes = new ServletRequestAttributes(request);
+        return this.errorAttributes.getErrorAttributes(requestAttributes, includeStackTrace);
+    }
 
 }
