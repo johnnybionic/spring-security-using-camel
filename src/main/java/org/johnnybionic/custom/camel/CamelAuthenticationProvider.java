@@ -30,7 +30,7 @@ public class CamelAuthenticationProvider implements AuthenticationProvider {
     private String authenticationRoute;
 
     @Autowired
-    public CamelAuthenticationProvider(ProducerTemplate producerTemplate) {
+    public CamelAuthenticationProvider(final ProducerTemplate producerTemplate) {
         this.producerTemplate = producerTemplate;
     }
 

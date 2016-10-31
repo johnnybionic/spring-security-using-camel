@@ -5,6 +5,8 @@
 
 A basic example of how to use an Apache Camel route as an authentication provider. This allows applications to customise their authentication by modifying the route, for example by adding a custom processor. 
 
+![Alt text](camel-security.jpg?raw=true "Overview")
+
 Starts at http://localhost:8080/index
 
 This project is based on the sample project 'spring-security-samples-boot-insecure' distributed with Spring Security Master 4.1.1.

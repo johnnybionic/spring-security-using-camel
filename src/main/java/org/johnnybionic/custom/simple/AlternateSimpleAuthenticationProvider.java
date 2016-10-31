@@ -31,7 +31,7 @@ public class AlternateSimpleAuthenticationProvider implements AuthenticationProv
     }
 
     @Override
-    public boolean supports(Class<?> authentication) {
+    public boolean supports(final Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 

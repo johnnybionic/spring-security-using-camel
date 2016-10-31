@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Camel processor that invokes an AuthenticationProvider.
- * 
+ *
  * @author johnny
  *
  */
@@ -20,22 +20,23 @@ import lombok.extern.slf4j.Slf4j;
 @Component("authenticationProcessor")
 public class SimpleAuthenticationProcessor implements Processor {
 
-	private static final String AUTHENTICATION = "authentication";
-	private AuthenticationProvider authenticationProvider;
+    private static final String AUTHENTICATION = "authentication";
+    private AuthenticationProvider authenticationProvider;
 
-	@Autowired
-	public SimpleAuthenticationProcessor(
-			@Qualifier("camelRouteAuthenticationProvider") AuthenticationProvider authenticationProvider) {
-		this.authenticationProvider = authenticationProvider;
-	}
-	
-	@Override
-	public void process(Exchange exchange) throws Exception {
-		Authentication body = exchange.getIn().getBody(Authentication.class);
-		log.info("Authenticating [{}]", body);
-		Authentication authenticate = authenticationProvider.authenticate(body);
-		// place the response into a header, in case subsequent stages require it
-		exchange.getIn().setHeader(AUTHENTICATION, authenticate);
-	}
-	
+    @Autowired
+    public SimpleAuthenticationProcessor(
+            @Qualifier("camelRouteAuthenticationProvider") final AuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
+
+    @Override
+    public void process(final Exchange exchange) throws Exception {
+        Authentication body = exchange.getIn().getBody(Authentication.class);
+        log.info("Authenticating [{}]", body);
+        Authentication authenticate = authenticationProvider.authenticate(body);
+        // place the response into a header, in case subsequent stages require
+        // it
+        exchange.getIn().setHeader(AUTHENTICATION, authenticate);
+    }
+
 }

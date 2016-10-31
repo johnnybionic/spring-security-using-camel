@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * Configuration if Spring Security.
+ * Configuration of Spring Security.
  *
  * @author johnny
  *
@@ -21,6 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("camelAuthenticationProvider")
     private AuthenticationProvider authProvider;
 
+    /**
+     * Configuration.
+     */
     @Override
     //@formatter:off
 	protected void configure(final HttpSecurity http) throws Exception {
@@ -35,6 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
     //@formatter:on
 
+    /**
+     * Sets the {@link AuthenticationProvider} used by Spring to our custom
+     * provider.
+     */
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider);

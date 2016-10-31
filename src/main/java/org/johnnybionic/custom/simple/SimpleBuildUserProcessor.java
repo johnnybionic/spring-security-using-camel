@@ -11,28 +11,29 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 /**
- * Shows how a User can be built as the last step of the Camel route, collecting information
- * that's been added to the Exchange during the route's process.
- * 
+ * Shows how a User can be built as the last step of the Camel route, collecting
+ * information that's been added to the Exchange during the route's process.
+ *
  * @author johnny
  *
  */
 @Component("buildUserProcessor")
 public class SimpleBuildUserProcessor implements Processor {
 
-	private static final String ROLES = "roles";
+    private static final String ROLES = "roles";
 
-	@Override
-	public void process(Exchange exchange) throws Exception {
-		
-		Authentication authentication = exchange.getIn().getBody(Authentication.class);
+    @Override
+    public void process(final Exchange exchange) throws Exception {
 
-		Collection<GrantedAuthority> roles = exchange.getIn().getHeader(ROLES, Collection.class);
-		User user = new User(authentication.getName(), authentication.getCredentials().toString(), roles);
+        Authentication authentication = exchange.getIn().getBody(Authentication.class);
 
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, authentication.getCredentials().toString(), roles);
-		exchange.getIn().setBody(token);
+        Collection<GrantedAuthority> roles = exchange.getIn().getHeader(ROLES, Collection.class);
+        User user = new User(authentication.getName(), authentication.getCredentials().toString(), roles);
 
-	}
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user,
+                authentication.getCredentials().toString(), roles);
+        exchange.getIn().setBody(token);
+
+    }
 
 }

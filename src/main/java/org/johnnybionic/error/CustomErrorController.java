@@ -41,7 +41,7 @@ public class CustomErrorController implements ErrorController {
     }
 
     /**
-     * Used when there is not specific handling for an error code.
+     * Used when there is no specific handling for an error code.
      *
      * @param model the model
      * @param request the request

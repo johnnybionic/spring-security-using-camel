@@ -24,9 +24,6 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 public class MainControllerTest {
 
-    @Autowired
-    private MainController controller;
-
     private MockMvc mockMvc;
 
     @Autowired
