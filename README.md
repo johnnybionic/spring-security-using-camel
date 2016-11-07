@@ -9,6 +9,9 @@ A basic example of how to use an Apache Camel route as an authentication provide
 
 Starts at http://localhost:8080/index
 
+This application is running on Heroku:
+https://immense-wave-27339.herokuapp.com/index
+
 This project is based on the sample project 'spring-security-samples-boot-insecure' distributed with Spring Security Master 4.1.1.
 
 It replaces the in-memory authentication used for the solution to that project, and uses instead a Camel route. 
