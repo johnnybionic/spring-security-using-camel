@@ -3,7 +3,7 @@
 [![Build status](https://travis-ci.org/johnnybionic/spring-security-using-camel.svg?branch=master)](https://travis-ci.org/johnnybionic/spring-security-using-camel)
 [![Coverage Status](https://coveralls.io/repos/github/johnnybionic/spring-security-using-camel/badge.svg?branch=master)](https://coveralls.io/github/johnnybionic/spring-security-using-camel?branch=master)
 
-A basic example of how to use an Apache Camel route as an authentication provider. This allows applications to customise their authentication by modifying the route, for example by adding a custom processor. 
+A basic example of how to use an Apache Camel route as an authentication provider. The benefit is that a company's applications can all share the same Spring Security setup, using the Camel authenticator, but each app can customise behaviour by modifying the route. For example, an application may require secondary authorisation from another source, or might want to pull in extra information about the user. 
 
 ![Alt text](camel-security.jpg?raw=true "Overview")
 
