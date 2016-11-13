@@ -1,5 +1,8 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 after_success:
-  - mvn org.jacoco:jacoco-maven-plugin:report org.eluder.coveralls:coveralls-maven-plugin:report
+- mvn org.jacoco:jacoco-maven-plugin:report org.eluder.coveralls:coveralls-maven-plugin:report
+deploy:
+  api_key:
+    secure: hIjBdO2aGwe/kTSWm036X8l9xwW7CP9MmHBp6rzjIeLrVKjDTw2zs9y1UtobrrIPGZLUDC2geVS0QHe0Cli1NKqInbZRmN8zGPfk7HY2HgzLwq03/Lh048ouSp3mJRF1pR76ik9VNocww3mDfGYmy51PTg3i2pnE4cSIC8dvkLgtCSikmebUB/NGRCA714ETKZwgqONI8xCifzbOQgmFTEfRDJbVVVsR+nRnDyG02HxfChabjdSVqD9cJAQRiGIC4kU4YcNfPA4d1wzWjpCdldgEwQB3aXVc+uKuYB+c2xmNPJp/apfQvv6bl1E6wB0MEwXjksQS8RdcJXAUtX+92Etb6TY/ItbdNMbAfX+hRPunfC5ppqdgY+LmFWxDvxbBsTPdl9jRBnBlZl6bex+1BUWK59iE8y9ElO37bBwFQVg3luTE6WJMVeBF6mYFbM84bs3s0D06w6Tn/HyCk5BA59J5NbDfFEhuo9e4LZDHXeMqBKldRxRuhNckIW3dXe4QSJN/MprwY95E7Wu+qzdHqcjKNc4rzQxaY9d1o3+2lpiT2ui2jLMGPeDQfuSab4GtE7N9T5lxfMDEYD1j8zkFbx6BWcOUo3mkPhJR2bpDO0BmFM8dmDzI+kNiuy6j9Hl/qsrLRZRRmqUXz5tkWWoqDk7FNgd4wKdVgE5RkpHgD4Y=
