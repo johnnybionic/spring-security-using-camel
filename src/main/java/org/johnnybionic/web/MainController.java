@@ -20,6 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * Simple controller. Based on a Spring sample project.
+ *
+ * @author johnny
  * @author Joe Grandja
  */
 @Controller

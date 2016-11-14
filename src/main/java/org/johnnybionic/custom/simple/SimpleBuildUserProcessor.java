@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
  * Shows how a User can be built as the last step of the Camel route, collecting
  * information that's been added to the Exchange during the route's process.
  *
+ * The User is placed into the Exchange as the body.
+ *
  * @author johnny
  *
  */

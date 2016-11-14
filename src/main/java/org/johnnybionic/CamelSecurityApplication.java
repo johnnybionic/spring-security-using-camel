@@ -23,6 +23,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
 /**
+ * Main application class.
+ *
  * @author johnny developed from a Spring Security example by
  * @author Joe Grandja
  */

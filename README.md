@@ -5,7 +5,7 @@
 
 A basic example of how to use an Apache Camel route as an authentication provider. The benefit is that a company's applications can all share the same Spring Security setup, using the Camel authenticator, but each app can customise behaviour by modifying the route. For example, an application may require secondary authorisation from another source, or might want to pull in extra information about the user.
 
-[This application is running on Heroku.](https://immense-wave-27339.herokuapp.com/index) *It may take a moment to start as it will probably be sleeping*. The application is auto-deployed (CI/CD) by Travis - see sectin below
+[This application is running on Heroku.](https://immense-wave-27339.herokuapp.com/index) *It may take a moment to start as it will probably be sleeping*. The application is auto-deployed (CI/CD) by Travis - see section below
 
 ![Alt text](camel-security.jpg?raw=true "Overview")
 
@@ -24,7 +24,9 @@ The sample also uses Bootstrap to improve on the original example's client :)
 There's also some basic use of Spring profiles that shows how authentication providers can
 be determined at runtime.
 
-Continuous Integeration and Deployment with Travis
+I've also added a second controller that uses Spring Security annotations.
+
+Continuous Integration and Deployment with Travis
 --------------------------------------------------
 
 The small flags at the top of the readme are provided by [Travis] (https://travis-ci.org/) and [Coveralls] (https://coveralls.io/repos). 
