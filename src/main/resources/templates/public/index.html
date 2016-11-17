@@ -27,7 +27,8 @@
 	You are a standard user.
 	</div>
 	
-	<table class="table  table-bordered">
+	<div sec:authorize="isAuthenticated()">
+	<table class="table table-bordered" >
 		<thead>
     		<tr>
       			<th>Your roles</th>
@@ -39,6 +40,7 @@
   			</tr>
   		</tbody>
 	</table>
+	</div>
 	</div>
 
 	
