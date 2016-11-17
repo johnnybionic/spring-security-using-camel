@@ -88,6 +88,19 @@ public class SecurityTagControllerTest {
         mockMvc.perform(get(SecurityTagController.TAGS_USER_INDEX)).andExpect(status().isOk());
     }
 
+    // the 'extra' page is only accessible by a user with ROLE_EXTRA
+    @Test(expected = AccessDeniedException.class)
+    @WithUserDetails("user")
+    public void whenExtraPage_withNormalUser_thenFailure() throws Exception {
+        controller.extraUser(null);
+    }
+
+    @Test
+    @WithUserDetails("extra")
+    public void whenExtraPage_withExtraUser_thenSuccess() throws Exception {
+        mockMvc.perform(get(SecurityTagController.TAGS_EXTRA_PAGE)).andExpect(status().isOk());
+    }
+
     @Test
     public void thatLoginPageReturned() throws Exception {
         generalPageTest("/tags/index", MainController.INDEX_PAGE);
@@ -97,4 +110,9 @@ public class SecurityTagControllerTest {
         mockMvc.perform(get(url)).andExpect(status().isOk()).andExpect(view().name(page));
     }
 
+    // tests the logging method
+    @Test
+    public void whenNullUser_thenLogUser_isOK() {
+        controller.index(null);
+    }
 }

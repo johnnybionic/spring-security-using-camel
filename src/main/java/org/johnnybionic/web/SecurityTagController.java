@@ -28,11 +28,12 @@ public class SecurityTagController {
 
     public static final String TAGS_USER_INDEX = "/tags/user/index";
     public static final String TAGS_ADMIN_INDEX = "/tags/admin/index";
-    private static final String TAGS_EXTRA_PAGE = "/tags/extra/index";
+    public static final String TAGS_EXTRA_PAGE = "/tags/extra/index";
 
     /** main. @return index page */
     @RequestMapping("/tags/index")
-    public String index() {
+    public String index(@CurrentUser final User user) {
+        logUser(user);
         return INDEX_PAGE;
     }
 

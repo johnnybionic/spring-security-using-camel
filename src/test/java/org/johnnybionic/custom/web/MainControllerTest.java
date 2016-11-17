@@ -85,6 +85,11 @@ public class MainControllerTest {
         generalPageTest("/public/index", MainController.PUBLIC_INDEX_PAGE);
     }
 
+    @Test
+    public void thatExtraIndexPageReturned() throws Exception {
+        generalPageTest("/extra/index", MainController.EXTRA_INDEX_PAGE);
+    }
+
     private void generalPageTest(final String url, final String page) throws Exception {
         mockMvc.perform(get(url)).andExpect(status().isOk()).andExpect(view().name(page));
     }
