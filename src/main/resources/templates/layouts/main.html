@@ -39,6 +39,7 @@
 				        <li class="active"><a href="/admin/index">Admin</a></li>
 				        <li class="active"><a href="/public/index">Public</a></li>
 				        <li class="active"><a href="/index/notThere">Error</a></li>
+				        <li class="active"  sec:authorize="isAuthenticated()"><a href="/extra/index">Extras</a></li>
 				    </ul>
 				    <div class="navbar-text navbar-right">
 			            Welcome <span sec:authentication="name">Guest</span>

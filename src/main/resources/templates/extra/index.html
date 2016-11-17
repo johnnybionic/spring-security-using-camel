@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorator="layouts/main">
+<head>
+	<title>Hello Spring Security</title>
+</head>
+<body th:with="home=${true}">
+
+ 	<div layout:fragment="content">
+	 	<h1>Extra features</h1>
+	 	<div class="alert alert-info" role="alert">
+	 	This page features some extra Spring Security stuff bolted on, that's not related to Camel.
+	 	</div>
+	 	<br/>
+		<p>This page should only be visible when a user has authenticated.</p>
+		
+		<div class="list-group">
+		  <a href="/user/index" th:href="@{/tags/user/index}" class="list-group-item">
+		    <h4 class="list-group-item-heading">View standard user pages</h4>
+			<p class="list-group-item-text">Access the user page via the secondary controller (uses method security)</p>		    
+		  </a>
+		  <a href="/user/index" th:href="@{/tags/extra/index}" class="list-group-item">
+		    <h4 class="list-group-item-heading">View standard user pages</h4>
+			<p class="list-group-item-text">User page only accessible by 'extra' user, with ROLE_EXTRA (method security, SpEL)</p>		    
+		  </a>
+ 		  <a href="/admin/index" th:href="@{/tags/admin/index}" class="list-group-item">
+		    <h4 class="list-group-item-heading">View administration pages</h4>
+			<p class="list-group-item-text">Access the admin page via the secondary controller (uses method security)</p>
+		  </a>
+		</div>
+ 
+	 	<div class="alert alert-info" role="alert">
+	 	
+		</div>
+	</div>
+</body>
+</html>

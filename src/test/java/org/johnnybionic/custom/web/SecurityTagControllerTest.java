@@ -61,13 +61,13 @@ public class SecurityTagControllerTest {
      */
     @Test(expected = AuthenticationCredentialsNotFoundException.class)
     public void whenAdminPage_withoutRole_thenError() throws Exception {
-        controller.adminIndex();
+        controller.adminIndex(null);
     }
 
     @Test(expected = AccessDeniedException.class)
     @WithMockUser(roles = "USER")
     public void whenAdminPage_withWrongRole_thenError() {
-        controller.adminIndex();
+        controller.adminIndex(null);
     }
 
     @Test

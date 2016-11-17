@@ -33,6 +33,7 @@ public class MainController {
     public static final String PUBLIC_INDEX_PAGE = "public/index";
     public static final String ADMIN_INDEX_PAGE = "admin/index";
     public static final String USER_INDEX_PAGE = "user/index";
+    public static final String EXTRA_INDEX_PAGE = "extra/index";
     public static final String INDEX_PAGE = "index";
 
     /** root. @return redirect to index */
@@ -63,6 +64,11 @@ public class MainController {
     @RequestMapping("/public/index")
     public String publicIndex() {
         return PUBLIC_INDEX_PAGE;
+    }
+
+    @RequestMapping("/extra/index")
+    public String extraIndex() {
+        return EXTRA_INDEX_PAGE;
     }
 
     /*

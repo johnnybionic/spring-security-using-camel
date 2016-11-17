@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 /**
  * Configuration of Spring Security.
@@ -16,7 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  *
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -30,15 +31,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     //@formatter:off
 	protected void configure(final HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-				.antMatchers("/css/**", "/index").permitAll()
-				.antMatchers("/user/**").hasRole("USER")
-				.antMatchers("/admin/**").hasRole("ADMIN")
-				.and()
-			.formLogin()
-				.loginPage("/login").failureUrl("/login-error");
-	}
+        http
+            .authorizeRequests()
+                // use mvcMatchers where possible (don't work here though)
+                .antMatchers("/css/**", "/index").permitAll()
+                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .and()
+                // for Angular
+            .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
+            .formLogin()
+                .loginPage("/login").failureUrl("/login-error");
+    }
     //@formatter:on
 
     /**

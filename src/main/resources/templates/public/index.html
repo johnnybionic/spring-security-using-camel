@@ -1,12 +1,46 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/main">
-    <head>
-        <title>Hello Spring Security</title>
-    </head>
-    <body th:with="home=${false}">
- 		<div layout:fragment="content">
-	        <h1>This is the public, unsecured area</h1>
-	        <p><a href="/index" th:href="@{/index}">Back to home page</a></p>
-	    </div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/main">
+<head>
+<title>Hello Spring Security</title>
+</head>
+<body th:with="home=${false}">
+	<div layout:fragment="content">
+		<h1>This is the public, unsecured area</h1>
+		<p>
+			<a href="/index" th:href="@{/index}">Back to home page</a>
+		</p>
+		
+		<div class="alert alert-success" role="alert" sec:authorize="isAuthenticated()">
+	You are logged in.</div>
+	
+	<!-- 
+	<div class="alert alert-info" role="alert"  th:switch="${false}">
+  		<p th:case="${true}">User is an administrator</p>
+  		<p th:case="${false}">User is a user</p>
+	</div>
+	 -->
+	 
+	<div class="alert alert-info" role="alert" sec:authorize="hasRole('ROLE_ADMIN')">
+	As an administrator, you can also view the Admin page</div>
+	<div class="alert alert-info" role="alert" sec:authorize="hasRole('ROLE_USER')">
+	You are a standard user.
+	</div>
+	
+	<table class="table  table-bordered">
+		<thead>
+    		<tr>
+      			<th>Your roles</th>
+    		</tr>
+  		</thead>
+  		<tbody>
+  			<tr th:each="authority : ${#authentication.getAuthorities()}">
+  			<td th:text="${authority.getAuthority().replaceFirst('ROLE_', '')}"></td>
+  			</tr>
+  		</tbody>
+	</table>
+	</div>
+
+	
+</body>
 </html>

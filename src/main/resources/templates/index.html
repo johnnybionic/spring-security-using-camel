@@ -7,17 +7,7 @@
 	<title>Hello Spring Security</title>
 </head>
 <body th:with="home=${true}">
-<!-- 	<div th:fragment="logout" class="logout"
-		sec:authorize="isAuthenticated()">
-		Logged in user: <span sec:authentication="name"></span> | Roles: <span
-			sec:authentication="principal.authorities"></span>
-		<div>
-			<form action="#" th:action="@{/logout}" method="post">
-				<input type="submit" value="Logout" />
-			</form>
-		</div>
-	</div>
- -->	
+
  	<div layout:fragment="content">
 	 	<h1>Welcome to the Spring/Camel Security Demo</h1>
 	 	<div class="alert alert-info" role="alert">
@@ -45,6 +35,10 @@
 		  <a href="/admin/index" th:href="@{/index/notThere}" class="list-group-item">
 		    <h4 class="list-group-item-heading">Cause a 404</h4>
 			<p class="list-group-item-text">Shows custom error handling</p>		    
+		  </a>
+		  <a href="/extra/index" th:href="@{/extra/index}" class="list-group-item" sec:authorize="isAuthenticated()">
+		    <h4 class="list-group-item-heading">Extras</h4>
+			<p class="list-group-item-text">Some extra features, only visible if logged in</p>		    
 		  </a>
 		</div>
  
