@@ -34,8 +34,12 @@ public class SimpleRoleProcessor implements Processor {
     public void process(final Exchange exchange) throws Exception {
         Authentication body = exchange.getIn().getBody(Authentication.class);
 
-        // create from the existing User, in case something added a role
+        // create from the existing User, in case a previous processor added a
+        // role
+        // - using a Set prevents duplicates (e.g. if previous process added the
+        // same roles)
         Collection<GrantedAuthority> roles = new HashSet<>(body.getAuthorities());
+
         // always add a ROLE_USER
         roles.add(new SimpleGrantedAuthority(ROLE_USER));
 

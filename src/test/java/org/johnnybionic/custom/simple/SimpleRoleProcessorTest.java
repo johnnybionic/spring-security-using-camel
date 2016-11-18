@@ -34,6 +34,7 @@ public class SimpleRoleProcessorTest {
     private static final String ROLE_USER = "ROLE_USER";
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
     private static final String ROLE_EXTRA = "ROLE_EXTRA";
+    private static final String ROLE_EXISTING = "ROLE_EXISTING";
 
     private static final String ROLES = "roles";
 
@@ -50,7 +51,7 @@ public class SimpleRoleProcessorTest {
     @Test
     public void testUserRoleAdded() throws Exception {
 
-        Exchange exchange = commonProcess(NON_ADMIN_USERNAME, NON_ADMIN_PASSWORD);
+        Exchange exchange = commonProcess(NON_ADMIN_USERNAME, NON_ADMIN_PASSWORD, null);
 
         Collection<GrantedAuthority> header = exchange.getIn().getHeader(ROLES, Collection.class);
         assertNotNull(header);
@@ -62,7 +63,7 @@ public class SimpleRoleProcessorTest {
     @Test
     public void thatAdminRoleAdded() throws Exception {
 
-        Exchange exchange = commonProcess(ADMIN_USERNAME, ADMIN_PASSWORD);
+        Exchange exchange = commonProcess(ADMIN_USERNAME, ADMIN_PASSWORD, null);
 
         Collection<GrantedAuthority> header = exchange.getIn().getHeader(ROLES, Collection.class);
         assertNotNull(header);
@@ -76,7 +77,7 @@ public class SimpleRoleProcessorTest {
     @Test
     public void thatAdminRoleNotAddedForBadPassword() throws Exception {
 
-        Exchange exchange = commonProcess(ADMIN_USERNAME, NON_ADMIN_PASSWORD);
+        Exchange exchange = commonProcess(ADMIN_USERNAME, NON_ADMIN_PASSWORD, null);
 
         Collection<GrantedAuthority> header = exchange.getIn().getHeader(ROLES, Collection.class);
         assertNotNull(header);
@@ -90,7 +91,7 @@ public class SimpleRoleProcessorTest {
     @Test
     public void thatThirdRoleIsAdded() throws Exception {
 
-        Exchange exchange = commonProcess(EXTRA_USERNAME, EXTRA_PASSWORD);
+        Exchange exchange = commonProcess(EXTRA_USERNAME, EXTRA_PASSWORD, null);
 
         Collection<GrantedAuthority> header = exchange.getIn().getHeader(ROLES, Collection.class);
         assertNotNull(header);
@@ -105,7 +106,7 @@ public class SimpleRoleProcessorTest {
     @Test
     public void thatThirdRoleIsNotAddedForBadPassword() throws Exception {
 
-        Exchange exchange = commonProcess(EXTRA_USERNAME, NON_ADMIN_PASSWORD);
+        Exchange exchange = commonProcess(EXTRA_USERNAME, NON_ADMIN_PASSWORD, null);
 
         Collection<GrantedAuthority> header = exchange.getIn().getHeader(ROLES, Collection.class);
         assertNotNull(header);
@@ -117,11 +118,49 @@ public class SimpleRoleProcessorTest {
 
     }
 
-    private Exchange commonProcess(String username, String password) {
+    /**
+     * Ensures a role added by a previous processor is still there.
+     */
+    @Test
+    public void whenRoleAlreadyPresent_thenStillExists() {
+        List<GrantedAuthority> roles = new ArrayList<>();
+        SimpleGrantedAuthority existingRole = new SimpleGrantedAuthority(ROLE_EXISTING);
+        roles.add(existingRole);
+
+        Exchange exchange = commonProcess(NON_ADMIN_USERNAME, NON_ADMIN_PASSWORD, roles);
+        Collection<GrantedAuthority> header = exchange.getIn().getHeader(ROLES, Collection.class);
+
+        assertTrue(header.contains(existingRole));
+    }
+
+    /**
+     * If a previous process added a role, ensure it's not also added by this
+     * processor.
+     */
+    @Test
+    public void whenUserRoleAlreadyPresent_thenNotAddedTwice() {
+        List<GrantedAuthority> roles = new ArrayList<>();
+        SimpleGrantedAuthority userRole = new SimpleGrantedAuthority(ROLE_USER);
+        roles.add(userRole);
+
+        Exchange exchange = commonProcess(NON_ADMIN_USERNAME, NON_ADMIN_PASSWORD, roles);
+        Collection<GrantedAuthority> header = exchange.getIn().getHeader(ROLES, Collection.class);
+
+        // can Hamcrest do something like this?
+        // - although the simplest test would be to ensure the count is one in
+        // the first place ...
+        assertEquals(1, header.stream().filter(auth -> auth.equals(userRole)).count());
+        assertEquals(1, header.size()); // KISS :)
+    }
+
+    private Exchange commonProcess(String username, String password, List<GrantedAuthority> rolesToAdd) {
         CamelContext context = new DefaultCamelContext();
         Exchange exchange = new DefaultExchange(context);
 
         List<GrantedAuthority> roles = new ArrayList<>();
+        if (rolesToAdd != null) {
+            roles.addAll(rolesToAdd);
+        }
         User user = new User(username, password, roles);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, user.getPassword(),
                 roles);
