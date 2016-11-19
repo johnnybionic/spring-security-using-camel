@@ -1,8 +1,11 @@
 package org.johnnybionic.custom.simple;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -15,6 +18,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.DefaultExchange;
 import org.johnnybionic.CamelSecurityApplication;
+import org.johnnybionic.custom.custom.CustomMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,7 @@ public class SimpleRoleProcessorTest {
     private static final String ROLE_USER = "ROLE_USER";
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
     private static final String ROLE_EXTRA = "ROLE_EXTRA";
+    private static final SimpleGrantedAuthority GRANTED_AUTHORITY_EXTRA = new SimpleGrantedAuthority(ROLE_EXTRA);
     private static final String ROLE_EXISTING = "ROLE_EXISTING";
 
     private static final String ROLES = "roles";
@@ -44,6 +49,9 @@ public class SimpleRoleProcessorTest {
     private static final String ADMIN_PASSWORD = "admin";
     private static final String EXTRA_USERNAME = "extra";
     private static final String EXTRA_PASSWORD = "extra";
+
+    private static final SimpleGrantedAuthority GRANTED_AUTHORITY_USER = new SimpleGrantedAuthority(ROLE_USER);
+    private static final SimpleGrantedAuthority GRANTED_AUTHORITY_ADMIN = new SimpleGrantedAuthority(ROLE_ADMIN);
 
     @Autowired
     private SimpleRoleProcessor processor;
@@ -57,7 +65,7 @@ public class SimpleRoleProcessorTest {
         assertNotNull(header);
         assertEquals(1, header.size());
 
-        assertTrue(header.contains(new SimpleGrantedAuthority(ROLE_USER)));
+        assertThat("Expected USER role", header, contains(GRANTED_AUTHORITY_USER));
     }
 
     @Test
@@ -69,8 +77,8 @@ public class SimpleRoleProcessorTest {
         assertNotNull(header);
         assertEquals(2, header.size());
 
-        assertTrue(header.contains(new SimpleGrantedAuthority(ROLE_USER)));
-        assertTrue(header.contains(new SimpleGrantedAuthority(ROLE_ADMIN)));
+        assertTrue(header.contains(GRANTED_AUTHORITY_USER));
+        assertTrue(header.contains(GRANTED_AUTHORITY_ADMIN));
 
     }
 
@@ -83,8 +91,8 @@ public class SimpleRoleProcessorTest {
         assertNotNull(header);
         assertEquals(1, header.size());
 
-        assertTrue(header.contains(new SimpleGrantedAuthority(ROLE_USER)));
-        assertFalse(header.contains(new SimpleGrantedAuthority(ROLE_ADMIN)));
+        assertTrue(header.contains(GRANTED_AUTHORITY_USER));
+        assertFalse(header.contains(GRANTED_AUTHORITY_ADMIN));
 
     }
 
@@ -97,9 +105,9 @@ public class SimpleRoleProcessorTest {
         assertNotNull(header);
         assertEquals(2, header.size());
 
-        assertTrue(header.contains(new SimpleGrantedAuthority(ROLE_USER)));
-        assertTrue(header.contains(new SimpleGrantedAuthority(ROLE_EXTRA)));
-        assertFalse(header.contains(new SimpleGrantedAuthority(ROLE_ADMIN)));
+        assertTrue(header.contains(GRANTED_AUTHORITY_USER));
+        assertTrue(header.contains(GRANTED_AUTHORITY_EXTRA));
+        assertFalse(header.contains(GRANTED_AUTHORITY_ADMIN));
 
     }
 
@@ -112,9 +120,9 @@ public class SimpleRoleProcessorTest {
         assertNotNull(header);
         assertEquals(1, header.size());
 
-        assertTrue(header.contains(new SimpleGrantedAuthority(ROLE_USER)));
-        assertFalse(header.contains(new SimpleGrantedAuthority(ROLE_EXTRA)));
-        assertFalse(header.contains(new SimpleGrantedAuthority(ROLE_ADMIN)));
+        assertTrue(header.contains(GRANTED_AUTHORITY_USER));
+        assertFalse(header.contains(GRANTED_AUTHORITY_EXTRA));
+        assertFalse(header.contains(GRANTED_AUTHORITY_ADMIN));
 
     }
 
@@ -140,8 +148,7 @@ public class SimpleRoleProcessorTest {
     @Test
     public void whenUserRoleAlreadyPresent_thenNotAddedTwice() {
         List<GrantedAuthority> roles = new ArrayList<>();
-        SimpleGrantedAuthority userRole = new SimpleGrantedAuthority(ROLE_USER);
-        roles.add(userRole);
+        roles.add(GRANTED_AUTHORITY_USER);
 
         Exchange exchange = commonProcess(NON_ADMIN_USERNAME, NON_ADMIN_PASSWORD, roles);
         Collection<GrantedAuthority> header = exchange.getIn().getHeader(ROLES, Collection.class);
@@ -149,10 +156,20 @@ public class SimpleRoleProcessorTest {
         // can Hamcrest do something like this?
         // - although the simplest test would be to ensure the count is one in
         // the first place ...
-        assertEquals(1, header.stream().filter(auth -> auth.equals(userRole)).count());
+        assertEquals(1, header.stream().filter(auth -> auth.equals(GRANTED_AUTHORITY_USER)).count());
         assertEquals(1, header.size()); // KISS :)
+
+        assertThat("Expected one ROLE_USER", header, CustomMatchers.exactlyNItems(1, equalTo(GRANTED_AUTHORITY_USER)));
     }
 
+    /**
+     * Common process for tests.
+     *
+     * @param username the username
+     * @param password the password
+     * @param rolesToAdd roles to add, or null if none
+     * @return the Exchange returned from the unit
+     */
     private Exchange commonProcess(String username, String password, List<GrantedAuthority> rolesToAdd) {
         CamelContext context = new DefaultCamelContext();
         Exchange exchange = new DefaultExchange(context);
