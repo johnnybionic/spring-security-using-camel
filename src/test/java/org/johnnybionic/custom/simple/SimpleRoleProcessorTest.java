@@ -1,12 +1,13 @@
 package org.johnnybionic.custom.simple;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.impl.DefaultExchange;
+import org.hamcrest.Matcher;
 import org.johnnybionic.CamelSecurityApplication;
 import org.johnnybionic.custom.custom.CustomMatchers;
 import org.junit.Test;
@@ -77,9 +79,7 @@ public class SimpleRoleProcessorTest {
         assertNotNull(header);
         assertEquals(2, header.size());
 
-        assertTrue(header.contains(GRANTED_AUTHORITY_USER));
-        assertTrue(header.contains(GRANTED_AUTHORITY_ADMIN));
-
+        assertThat("Expected USER role", header, containsInAnyOrder(GRANTED_AUTHORITY_USER, GRANTED_AUTHORITY_ADMIN));
     }
 
     @Test
@@ -91,8 +91,8 @@ public class SimpleRoleProcessorTest {
         assertNotNull(header);
         assertEquals(1, header.size());
 
-        assertTrue(header.contains(GRANTED_AUTHORITY_USER));
-        assertFalse(header.contains(GRANTED_AUTHORITY_ADMIN));
+        assertThat("Expected USER role", header, contains(GRANTED_AUTHORITY_USER));
+        assertThat("Expected ADMIN role", header, not(contains(GRANTED_AUTHORITY_ADMIN)));
 
     }
 
@@ -105,10 +105,8 @@ public class SimpleRoleProcessorTest {
         assertNotNull(header);
         assertEquals(2, header.size());
 
-        assertTrue(header.contains(GRANTED_AUTHORITY_USER));
-        assertTrue(header.contains(GRANTED_AUTHORITY_EXTRA));
-        assertFalse(header.contains(GRANTED_AUTHORITY_ADMIN));
-
+        assertThat("Expected USER role", header, containsInAnyOrder(GRANTED_AUTHORITY_USER, GRANTED_AUTHORITY_EXTRA));
+        assertThat("Expected ADMIN role", header, not(contains(GRANTED_AUTHORITY_ADMIN)));
     }
 
     @Test
@@ -120,9 +118,9 @@ public class SimpleRoleProcessorTest {
         assertNotNull(header);
         assertEquals(1, header.size());
 
-        assertTrue(header.contains(GRANTED_AUTHORITY_USER));
-        assertFalse(header.contains(GRANTED_AUTHORITY_EXTRA));
-        assertFalse(header.contains(GRANTED_AUTHORITY_ADMIN));
+        assertThat("Expected USER role", header, contains(GRANTED_AUTHORITY_USER));
+        assertThat("Expected EXTRA role", header, not(contains(GRANTED_AUTHORITY_EXTRA)));
+        assertThat("Expected ADMIN role", header, not(contains(GRANTED_AUTHORITY_ADMIN)));
 
     }
 
@@ -138,7 +136,7 @@ public class SimpleRoleProcessorTest {
         Exchange exchange = commonProcess(NON_ADMIN_USERNAME, NON_ADMIN_PASSWORD, roles);
         Collection<GrantedAuthority> header = exchange.getIn().getHeader(ROLES, Collection.class);
 
-        assertTrue(header.contains(existingRole));
+        assertThat("Expected existing role", header, hasItem(existingRole));
     }
 
     /**
@@ -159,7 +157,12 @@ public class SimpleRoleProcessorTest {
         assertEquals(1, header.stream().filter(auth -> auth.equals(GRANTED_AUTHORITY_USER)).count());
         assertEquals(1, header.size()); // KISS :)
 
-        assertThat("Expected one ROLE_USER", header, CustomMatchers.exactlyNItems(1, equalTo(GRANTED_AUTHORITY_USER)));
+        // a Matcher that iterates over GrantedAuthority and supertypes to find
+        // exactly one
+        Matcher<Iterable<? super GrantedAuthority>> exactlyOnce = CustomMatchers
+                .exactlyOnce(equalTo(GRANTED_AUTHORITY_USER));
+
+        assertThat("Expected one ROLE_USER", header, exactlyOnce);
     }
 
     /**

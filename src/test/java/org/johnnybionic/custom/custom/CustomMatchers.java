@@ -12,9 +12,17 @@ import org.hamcrest.core.IsCollectionContaining;
  */
 public class CustomMatchers {
 
-    public static <T> Matcher<Iterable<? super T>> exactlyNItems(final int n, Matcher<? super T> elementMatcher) {
+    /**
+     * Tests if the item to be matched occurs exactly n times in the collection.
+     *
+     * @param n the number of times this element is expected to occur
+     * @param elementMatcher the matcher
+     * @return a {@link Matcher} that iterates over a collection of type T and
+     *         its supertypes
+     */
+    public static <T> Matcher<Iterable<? super T>> exactlyNItems(final int n, Matcher<T> elementMatcher) {
 
-        return new IsCollectionContaining<T>(elementMatcher) {
+        IsCollectionContaining<T> isCollectionContaining = new IsCollectionContaining<T>(elementMatcher) {
 
             @Override
             protected boolean matchesSafely(Iterable<? super T> collection, Description mismatchDescription) {
@@ -42,5 +50,19 @@ public class CustomMatchers {
                 return count == n;
             }
         };
+
+        return isCollectionContaining;
     }
+
+    /**
+     * Convenience method to test an element occurs only once.
+     *
+     * @param elementMatcher the matcher
+     * @return a {@link Matcher} that iterates over a collection of type T and
+     *         its supertypes
+     */
+    public static <T> Matcher<Iterable<? super T>> exactlyOnce(Matcher<T> elementMatcher) {
+        return exactlyNItems(1, elementMatcher);
+    }
+
 }

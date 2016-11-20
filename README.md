@@ -6,7 +6,7 @@
 A basic example of how to use an Apache Camel route as an authentication provider. The benefit is that a company's applications can all share the same Spring Security setup, using the Camel authenticator, but each app can customise behaviour by modifying the route. For example, an application may require secondary authorisation from another source, or might want to pull in extra information about the user.
 
 - [This application is running on Heroku.](https://immense-wave-27339.herokuapp.com/index) *It may take a moment to start as it will probably be sleeping*. The application is auto-deployed (CI/CD) by Travis when changes are committed to GitHub - see section below
-- [This application is running on AWS.](http://sample-env.pdcdhfpufx.us-east-1.elasticbeanstalk.com/index)
+- [This application is running on AWS.](http://ec2-52-210-3-90.eu-west-1.compute.amazonaws.com/index)
 
 ![Alt text](camel-security.jpg?raw=true "Overview")
 
