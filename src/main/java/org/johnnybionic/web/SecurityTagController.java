@@ -10,7 +10,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,8 +30,13 @@ public class SecurityTagController {
     public static final String TAGS_ADMIN_INDEX = "/tags/admin/index";
     public static final String TAGS_EXTRA_PAGE = "/tags/extra/index";
 
-    /** main. @return index page */
-    @RequestMapping("/tags/index")
+    /**
+     * main.
+     *
+     * @param user the current user, if available
+     * @return index page
+     */
+    @GetMapping("/tags/index")
     public String index(@CurrentUser final User user) {
         logUser(user);
         return INDEX_PAGE;
@@ -42,7 +47,7 @@ public class SecurityTagController {
      *
      * @param user the current user
      */
-    @RequestMapping(TAGS_ADMIN_INDEX)
+    @GetMapping(TAGS_ADMIN_INDEX)
     @Secured("ROLE_ADMIN")
     public String adminIndex(@CurrentUser final User user) {
         logUser(user);
@@ -54,7 +59,7 @@ public class SecurityTagController {
      *
      * @param user the current user
      */
-    @RequestMapping(TAGS_USER_INDEX)
+    @GetMapping(TAGS_USER_INDEX)
     @Secured("ROLE_USER")
     public String userIndex(@CurrentUser final User user) {
         logUser(user);
@@ -71,7 +76,7 @@ public class SecurityTagController {
      * @param user the current user
      * @return the standard user index page
      */
-    @RequestMapping(TAGS_EXTRA_PAGE)
+    @GetMapping(TAGS_EXTRA_PAGE)
     @ExtraUser
     public String extraUser(@CurrentUser final User user) {
         logUser(user);

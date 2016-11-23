@@ -35,6 +35,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(CamelSecurityApplication.class)
 @WebAppConfiguration
+@SuppressWarnings("unchecked")
 public class SimpleRoleProcessorTest {
 
     private static final String ROLE_USER = "ROLE_USER";

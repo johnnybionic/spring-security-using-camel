@@ -29,6 +29,7 @@ public class SimpleBuildUserProcessor implements Processor {
 
         Authentication authentication = exchange.getIn().getBody(Authentication.class);
 
+        @SuppressWarnings("unchecked")
         Collection<GrantedAuthority> roles = exchange.getIn().getHeader(ROLES, Collection.class);
         User user = new User(authentication.getName(), authentication.getCredentials().toString(), roles);
 

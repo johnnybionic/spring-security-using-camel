@@ -3,7 +3,7 @@
 [![Build status](https://travis-ci.org/johnnybionic/spring-security-using-camel.svg?branch=master)](https://travis-ci.org/johnnybionic/spring-security-using-camel)
 [![Coverage Status](https://coveralls.io/repos/github/johnnybionic/spring-security-using-camel/badge.svg?branch=master)](https://coveralls.io/github/johnnybionic/spring-security-using-camel?branch=master)
 
-A basic example of how to use an Apache Camel route as an authentication provider. The benefit is that a company's applications can all share the same Spring Security setup, using the Camel authenticator, but each app can customise behaviour by modifying the route. For example, an application may require secondary authorisation from another source, or might want to pull in extra information about the user.
+A basic example of how to use an Apache Camel route as an authentication provider. The benefit is that a company's applications can all share the same Spring Security configuration, using the Camel authenticator, but each app can customise behaviour by modifying the route. For example, an application may require secondary authorisation from another source, or might want to pull in extra information about the user.
 
 - [This application is running on Heroku.](https://immense-wave-27339.herokuapp.com/index) *It may take a moment to start as it will probably be sleeping*. The application is auto-deployed (CI/CD) by Travis when changes are committed to GitHub - see section below
 - [This application is running on AWS.](http://ec2-52-210-3-90.eu-west-1.compute.amazonaws.com/index)
@@ -32,7 +32,7 @@ Continuous Integration and Deployment with Travis
 
 The small flags at the top of the readme are provided by [Travis] (https://travis-ci.org/) and [Coveralls] (https://coveralls.io/repos). 
 
-Travis provides CI by building the project every time a change is pushed to GitHub - at sends the results to Coveralls to produce coverage reports. Travis provides CD by [pushing the app to Heroku] (https://docs.travis-ci.com/user/deployment/heroku/). 
+Travis provides CI by building the project every time a change is pushed to GitHub - plus it sends the results to Coveralls to produce coverage reports. Travis also provides CD by [pushing the app to Heroku] (https://docs.travis-ci.com/user/deployment/heroku/). 
 
 Extras
 ------

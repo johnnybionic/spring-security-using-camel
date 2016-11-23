@@ -41,9 +41,9 @@
 				        <li class="active"><a href="/index/notThere">Error</a></li>
 				        <li class="active"  sec:authorize="isAuthenticated()"><a href="/extra/index">Extras</a></li>
 				    </ul>
-				    <div class="navbar-text navbar-right">
+				    <div class="navbar-text navbar-right" sec:authorize="isAuthenticated()" >
 			            Welcome <span sec:authentication="name">Guest</span>
-				    	<form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
+				    	<form id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
 				    		| <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Logout</a>
 				    	</form>
 				    </div>

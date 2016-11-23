@@ -17,7 +17,7 @@ package org.johnnybionic.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Simple controller. Based on a Spring sample project.
@@ -37,36 +37,41 @@ public class MainController {
     public static final String INDEX_PAGE = "index";
 
     /** root. @return redirect to index */
-    @RequestMapping("/")
+    @GetMapping("/")
     public String root() {
         return "redirect:/" + INDEX_PAGE;
     }
 
     /** main. @return index page */
-    @RequestMapping("/index")
+    @GetMapping("/index")
     public String index() {
         return INDEX_PAGE;
     }
 
     /** user page. @return user index page */
-    @RequestMapping("/user/index")
+    @GetMapping("/user/index")
     public String userIndex() {
         return USER_INDEX_PAGE;
     }
 
     /** admin page. @return admin index page */
-    @RequestMapping("/admin/index")
+    @GetMapping("/admin/index")
     public String adminIndex() {
         return ADMIN_INDEX_PAGE;
     }
 
     /** public page. @return public index page */
-    @RequestMapping("/public/index")
+    @GetMapping("/public/index")
     public String publicIndex() {
         return PUBLIC_INDEX_PAGE;
     }
 
-    @RequestMapping("/extra/index")
+    /**
+     * An extra index page.
+     *
+     * @return the page name
+     */
+    @GetMapping("/extra/index")
     public String extraIndex() {
         return EXTRA_INDEX_PAGE;
     }
@@ -76,7 +81,7 @@ public class MainController {
      * Spring Security's filter chain, and is specified in SecurityConfig.
      */
     /** login. @return login page */
-    @RequestMapping(value = "/login")
+    @GetMapping(value = "/login")
     public String login() {
         return LOGIN_PAGE;
     }
@@ -87,7 +92,7 @@ public class MainController {
      * @param model the model
      * @return login error page
      */
-    @RequestMapping("/login-error")
+    @GetMapping("/login-error")
     public String loginError(final Model model) {
         model.addAttribute(LOGIN_ERROR_ATTRIBUTE, true);
         return LOGIN_PAGE;
