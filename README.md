@@ -22,15 +22,12 @@ There could be any number of processes (steps) in the route, each responsible fo
 
 The sample also uses Bootstrap to improve on the original example's client :)
 
-There's also some basic use of Spring profiles that shows how authentication providers can
-be determined at runtime.
-
-I've also added a second controller that uses Spring Security annotations.
+There's also some basic use of Spring profiles showing how authentication providers can be determined at runtime.
 
 Continuous Integration and Deployment with Travis
 --------------------------------------------------
 
-The small flags at the top of the readme are provided by [Travis] (https://travis-ci.org/) and [Coveralls] (https://coveralls.io/repos). 
+The small badges at the top of the readme are provided by [Travis] (https://travis-ci.org/) and [Coveralls] (https://coveralls.io/repos). 
 
 Travis provides CI by building the project every time a change is pushed to GitHub - plus it sends the results to Coveralls to produce coverage reports. Travis also provides CD by [pushing the app to Heroku] (https://docs.travis-ci.com/user/deployment/heroku/). 
 
