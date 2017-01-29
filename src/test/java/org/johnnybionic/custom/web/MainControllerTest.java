@@ -22,6 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(CamelSecurityApplication.class)
 @WebAppConfiguration
+// @ContextConfiguration(classes = {CamelSecurityApplication.class})
 public class MainControllerTest {
 
     private MockMvc mockMvc;

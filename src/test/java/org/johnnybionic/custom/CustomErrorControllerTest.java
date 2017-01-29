@@ -1,4 +1,4 @@
-package org.johnnybionic.custom.error;
+package org.johnnybionic.custom;
 
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -63,7 +63,7 @@ public class CustomErrorControllerTest {
     }
 
     /**
-     * Simulate an error, bu directly invoking the /error endpoint
+     * Simulate an error, but directly invoking the /error endpoint
      *
      * @throws Exception
      */
@@ -75,7 +75,7 @@ public class CustomErrorControllerTest {
     }
 
     /**
-     * Simulate an error, bu directly invoking the /error endpoint
+     * Simulate an error, but directly invoking the /error endpoint
      *
      * @throws Exception
      */
@@ -86,4 +86,10 @@ public class CustomErrorControllerTest {
 
     }
 
+    // @Test
+    // public void unauthorisedUser() throws Exception {
+    // mockMvc.perform(get("/admin/index")).andExpect(status().is4xxClientError())
+    // .andExpect(view().name(CustomErrorController.UNAUTHORISED_VIEW_NAME));
+    //
+    // }
 }

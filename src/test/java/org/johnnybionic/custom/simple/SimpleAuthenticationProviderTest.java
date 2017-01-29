@@ -31,7 +31,7 @@ public class SimpleAuthenticationProviderTest {
     public void testHappyPath() {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(USERNAME, PASSWORD);
         Authentication authenticate = provider.authenticate(token);
-        assert (authenticate == token);
+        assertTrue(authenticate == token);
     }
 
     @Test(expected = org.springframework.security.core.AuthenticationException.class)
