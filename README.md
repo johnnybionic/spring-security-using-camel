@@ -35,3 +35,10 @@ Extras
 ------
 
 The project features a secondary controller where access is controlled via Spring Security annotations, including a custom 'meta-annotation'. This is not related to Camel, but was a testing ground for learning new features in Spring Security 4.1. See the 'Extras' page for more information.
+
+-----
+rebase learning
+
+1: this is the first commit
+2: this is the second commit/push
+3: this is the third commit/push
